@@ -13,14 +13,14 @@ center = (x_max / 2, y_max / 2)
 scale = 10  # Reduced scale for better visibility
 z_modifier =  0  # Adjusted z modifier for better visibility
 points = [
-    (scale, scale, scale+z_modifier),
-    (scale, scale, -scale+z_modifier),
-    (scale, -scale, scale+z_modifier),
-    (scale, -scale, -scale+z_modifier),
-    (-scale, scale, scale+z_modifier),
-    (-scale, scale, -scale+z_modifier),
-    (-scale, -scale, scale+z_modifier),
-    (-scale, -scale, -scale+z_modifier)
+    (scale, scale, scale),
+    (scale, scale, -scale),
+    (scale, -scale, scale),
+    (scale, -scale, -scale),
+    (-scale, scale, scale),
+    (-scale, scale, -scale),
+    (-scale, -scale, scale),
+    (-scale, -scale, -scale)
     ]
 
 def project_3d_unto_2d(x, y, z, f):
@@ -55,15 +55,20 @@ def rotate_around_z(x, y, z, angle):
     point_3d = np.array([x, y, z])
     return tuple(rotation_matrix_z @ point_3d)
 
+def rotate_points(points, angle_x, angle_y, angle_z):
+    rotated_points = []
+    for point in points:
+        x, y, z = point
+        x, y, z = rotate_around_x(x, y, z, angle_x)
+        x, y, z = rotate_around_y(x, y, z, angle_y)
+        x, y, z = rotate_around_z(x, y, z, angle_z)
+        rotated_points.append((x, y, z))
+    return rotated_points
 
-def cube_points(three_d_points, angle_x):
+def cube_points(three_d_points):
     projected_points = []
     for point in three_d_points:
         x, y, z = point
-        x, y, z = rotate_around_y(x, y, z, angle_x)
-        y = float(y)
-        x = float(x)
-        z = float(z)
         projected_point = project_3d_unto_2d(x, y, z, 100)
         projected_points.append(projected_point)
     return projected_points
@@ -79,7 +84,7 @@ def main():
     fps = 60
 
     while True:
-        list = cube_points(points, angle)
+        list = cube_points(rotate_points(points, angle, angle, angle))
         face_front = [list[0], list[2], list[6], list[4]]
         fave_back = [list[1], list[3], list[7], list[5]]
         edge1 = [list[0], list[1]]
@@ -92,12 +97,12 @@ def main():
         font = pg.font.Font('freesansbold.ttf', 32)
 
         # Draw the line
-        pg.draw.lines(screen, (255, 255, 255), True, face_front, 2)
-        pg.draw.lines(screen, (255, 255, 255), True, fave_back, 2)
-        pg.draw.lines(screen, (255, 255, 255), True, edge1, 2)
-        pg.draw.lines(screen, (255, 255, 255), True, edge2, 2)
-        pg.draw.lines(screen, (255, 255, 255), True, edge3, 2)
-        pg.draw.lines(screen, (255, 255, 255), True, edge4, 2)
+        pg.draw.lines(screen, (127, 0, 255), True, face_front, 2)
+        pg.draw.lines(screen, (0, 0, 255), True, fave_back, 2)
+        pg.draw.lines(screen, (0, 255, 0), True, edge1, 2)
+        pg.draw.lines(screen, (255, 255, 0), True, edge2, 2)
+        pg.draw.lines(screen, (255, 127, 0), True, edge3, 2)
+        pg.draw.lines(screen, (255, 0, 0), True, edge4, 2)
         
         # Update the display
         pg.display.flip()
