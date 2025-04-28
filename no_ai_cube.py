@@ -78,35 +78,40 @@ def main():
     pg.init()
     pg.display.set_caption("My Pygame Window")
     screen = pg.display.set_mode((x_max, y_max))
-    angle = 0
+    anglex = 0
+    angley = 0
+    anglez = 0
 
     clock = pg.time.Clock()
     fps = 60
 
     while True:
-        list = cube_points(rotate_points(points, angle, angle, angle))
-        face_front = [list[0], list[2], list[6], list[4]]
-        fave_back = [list[1], list[3], list[7], list[5]]
-        edge1 = [list[0], list[1]]
-        edge2 = [list[2], list[3]]
-        edge3 = [list[4], list[5]]
-        edge4 = [list[6], list[7]]
+        anglex += 0.01
+        angley += 0.0
+        anglez += 0.0
+
+        list = cube_points(rotate_points(points, anglex, angley, anglez))
+        face_1 = [list[0], list[2], list[6], list[4]]
+        face_2 = [list[1], list[3], list[7], list[5]]
+        face_3 = [list[0], list[1], list[3], list[2]]
+        face_4 = [list[4], list[5], list[7], list[6]]
+        face_5 = [list[0], list[1], list[5], list[4]]
+        face_6 = [list[2], list[3], list[7], list[6]]
         # Clear the screen
         screen.fill((0, 0, 0))
 
         font = pg.font.Font('freesansbold.ttf', 32)
 
         # Draw the line
-        pg.draw.lines(screen, (127, 0, 255), True, face_front, 2)
-        pg.draw.lines(screen, (0, 0, 255), True, fave_back, 2)
-        pg.draw.lines(screen, (0, 255, 0), True, edge1, 2)
-        pg.draw.lines(screen, (255, 255, 0), True, edge2, 2)
-        pg.draw.lines(screen, (255, 127, 0), True, edge3, 2)
-        pg.draw.lines(screen, (255, 0, 0), True, edge4, 2)
+        pg.draw.polygon(screen, (127, 0, 255), face_1)
+        pg.draw.polygon(screen, (0, 0, 255), face_2)
+        pg.draw.polygon(screen, (0, 255, 0), face_3)
+        pg.draw.polygon(screen, (255, 255, 0), face_4)
+        pg.draw.polygon(screen, (255, 127, 0), face_5)
+        pg.draw.polygon(screen, (255, 0, 0), face_1)
         
         # Update the display
         pg.display.flip()
-        angle += 0.01
         clock.tick(fps)
 
         for event in pg.event.get():
