@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Create conda environment and install requirements",
+			"type": "shell",
+			"command": "conda create -n renderer-env --file requirements.txt -y && conda activate renderer-env",
+			"args": [],
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

@@ -73,7 +73,6 @@ def cube_points(three_d_points):
         projected_points.append(projected_point)
     return projected_points
 
-
 def main():
     pg.init()
     pg.display.set_caption("My Pygame Window")
@@ -87,8 +86,8 @@ def main():
 
     while True:
         anglex += 0.01
-        angley += 0.0
-        anglez += 0.0
+        angley += 0.01
+        anglez += 0.01
 
         list = cube_points(rotate_points(points, anglex, angley, anglez))
         face_1 = [list[0], list[2], list[6], list[4]]
@@ -100,14 +99,12 @@ def main():
         # Clear the screen
         screen.fill((0, 0, 0))
 
-        font = pg.font.Font('freesansbold.ttf', 32)
-
         # Draw the line
-        pg.draw.polygon(screen, (127, 0, 255), face_1)
-        pg.draw.polygon(screen, (0, 0, 255), face_2)
-        pg.draw.polygon(screen, (0, 255, 0), face_3)
-        pg.draw.polygon(screen, (255, 255, 0), face_4)
-        pg.draw.polygon(screen, (255, 127, 0), face_5)
+        pg.draw.polygon(screen, (127, 0, 255), face_6)
+        pg.draw.polygon(screen, (0, 0, 255), face_5)
+        pg.draw.polygon(screen, (0, 255, 0), face_4)
+        pg.draw.polygon(screen, (255, 255, 0), face_3)
+        pg.draw.polygon(screen, (255, 127, 0), face_2)
         pg.draw.polygon(screen, (255, 0, 0), face_1)
         
         # Update the display
@@ -120,5 +117,8 @@ def main():
                 sys.exit()
                 
 #print (cube_ponts(points))
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+
+angle = 0
+main()
